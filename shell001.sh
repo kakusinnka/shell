@@ -18,4 +18,12 @@ for FILE in tmp/*.py
     ownerStr="'owner': 'max',"
     echo $ownerStr
     sed -i "${line}i \    $ownerStr" $FILE
+
+    extLN=$(sed -n '/external_dag_id/=' $FILE)
+    echo $extLN
+    for line in ${extLN[@]}; do
+      echo $line
+      sed -i "${line}s/\",/_sandbox\",/g" $FILE
+    done
 done
+
