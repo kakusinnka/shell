@@ -19,11 +19,12 @@ for FILE in tmp/*.py
     echo $ownerStr
     sed -i "${line}i \    $ownerStr" $FILE
 
-    extLN=$(sed -n '/external_dag_id/=' $FILE)
+    extLN=$(sed -n '/external_dag_id\|trigger_dag_id/=' $FILE)
     echo $extLN
     for line in ${extLN[@]}; do
       echo $line
       sed -i "${line}s/\",/_sandbox\",/g" $FILE
+      sed -i "${line}s/',/_sandbox',/g" $FILE
     done
 done
 
